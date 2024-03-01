@@ -2,10 +2,12 @@ package com.api.agroguard.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 // User Collection
+@Document(collection = "user")
 @Data
 public class UserDO {
     @Id

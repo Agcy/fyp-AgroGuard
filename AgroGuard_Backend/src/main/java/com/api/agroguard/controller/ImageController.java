@@ -1,4 +1,4 @@
-package com.api.agroguard.mapper;
+package com.api.agroguard.controller;
 
 import com.api.agroguard.model.ImageDO;
 import com.api.agroguard.service.ImageService;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/images")
-public class ImageMapper {
+public class ImageController {
 
     @Autowired
     private ImageService imageService;

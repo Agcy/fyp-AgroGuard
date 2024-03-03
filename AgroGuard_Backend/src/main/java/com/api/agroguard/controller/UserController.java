@@ -1,30 +1,30 @@
-package com.api.agroguard.mapper;
+package com.api.agroguard.controller;
 
 import com.api.agroguard.exception.ResourceNotFoundException;
 import com.api.agroguard.model.UserDO;
 import com.api.agroguard.repository.UserRepository;
+import com.api.agroguard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin("*")
-public class UserMapper {
+public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private UserService userService;
 
     // get all users
     @GetMapping("/users/getAll")
@@ -32,12 +32,12 @@ public class UserMapper {
         return userRepository.findAll();
     }
 
-    @PostMapping("/users/login")
+    @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDO loginDetails) {
         UserDO user = userRepository.findByEmail(loginDetails.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + loginDetails.getEmail()));
 
-        if (passwordEncoder.matches(loginDetails.getPassword(), user.getPassword())) {
+        if (Objects.equals(loginDetails.getPassword(), user.getPassword())) {
             return ResponseEntity.ok().body("User authenticated successfully");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
@@ -45,12 +45,14 @@ public class UserMapper {
     }
 
     // create user rest API
-    @PostMapping("/users/register")
-    public ResponseEntity<UserDO> createUser(@RequestBody UserDO user) {
-        SecureRandom random = new SecureRandom();
-        user.setId(user.getEmail() + "@" + random.nextInt(1000));
-        UserDO newUser = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@RequestBody UserDO user) {
+        try {
+            String result = userService.createUser(user);
+            return ResponseEntity.ok().body(result);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     // get user by id rest api
@@ -70,6 +72,7 @@ public class UserMapper {
                         ("User not exist with id :" + id));
         user.setName(userDetails.getName());
         user.setEmail(userDetails.getEmail());
+        user.setGmtModified(LocalDateTime.now());
         UserDO updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
     }

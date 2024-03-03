@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface UserService {
-    UserDO createUser(UserDO user);
+    String createUser(UserDO user);
     UserDO getUserById(String id);
     List<UserDO> getAllUsers();
     UserDO updateUser(String id, UserDO user);

@@ -14,4 +14,8 @@ public interface UserRepository extends MongoRepository<UserDO, String> {
     // 检查邮箱是否已存在
     boolean existsByEmail(String email);
 
+    Optional<UserDO> findByName(String username);
+
+    Boolean existsByName(String username);
+
 }

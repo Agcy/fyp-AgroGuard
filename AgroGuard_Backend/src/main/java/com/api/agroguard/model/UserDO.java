@@ -46,6 +46,8 @@ public class UserDO {
     @NotBlank
     private LocalDateTime gmtModified;
 
+    private String resetToken;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 

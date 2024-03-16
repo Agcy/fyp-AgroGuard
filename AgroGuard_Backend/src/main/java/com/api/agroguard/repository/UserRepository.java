@@ -18,4 +18,6 @@ public interface UserRepository extends MongoRepository<UserDO, String> {
 
     Boolean existsByName(String username);
 
+    Optional<UserDO> findByResetToken(String resetToken);
+
 }

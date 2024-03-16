@@ -1,6 +1,8 @@
 package com.api.agroguard.utils;
 
 import java.security.Key;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Date;
 
 import com.api.agroguard.service.impl.UserDetailsImpl;
@@ -65,4 +67,16 @@ public class JwtUtils {
 
         return false;
     }
+
+    public String generatePasswordResetToken(String userId) {
+        long passwordResetTokenExpirationMs = 3600000; // 例如，设置1小时的有效期
+
+        return Jwts.builder()
+                .setSubject(userId) // 使用用户ID或用户名作为主题
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + passwordResetTokenExpirationMs))
+                .signWith(key(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
 }

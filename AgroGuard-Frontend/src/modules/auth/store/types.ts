@@ -4,6 +4,7 @@ export interface AuthState {
     id: string;
     username: string;
     email: string;
+    avatarUrl: string;
     roles: string[];
   };
 }

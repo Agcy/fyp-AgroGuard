@@ -136,8 +136,8 @@
 <script lang="ts">
 import {defineComponent, ref} from 'vue'
 import { MailIcon, AcademicCapIcon, IdentificationIcon, LockOpenIcon } from '@heroicons/vue/solid'
-import {apiSignUp} from "myApi/user-api/signup-api";
-import {apiSignIn} from "myApi/user-api/signin-api";
+import {apiSignUp} from "myApi/auth-api/signup-api";
+import {apiSignIn} from "myApi/auth-api/signin-api";
 import useStore from 'store'
 import {ElMessage} from "element-plus";
 

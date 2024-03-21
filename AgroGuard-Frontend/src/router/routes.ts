@@ -31,6 +31,8 @@ const Card = () => import('modules/cards/views/index.vue')
 const Icons = () => import('modules/icons/views/index.vue')
 const Profile = () => import('modules/profile/views/index.vue')
 const Map = () => import('modules/map/views/index.vue')
+const Posts = () => import('modules/home/views/index.vue')
+const PostDetail = () => import('modules/home/views/PostDetailPage.vue')
 
 const ComponentLayout = () => import('components/ComponentLayout/index.vue')
 
@@ -218,6 +220,28 @@ const routes = [
       requiresAuth: false,
     },
   },
+  {
+    path: '/posts',
+    component: Posts,
+    name: 'Posts',
+    meta: {
+      title: 'Posts',
+      icon: DocumentTextIcon,
+      requiresAuth: true,
+      parentPath: 'Home',
+      color: 'text-red-410',
+    },
+  },
+  {
+    path: '/posts/:postId',
+    component: PostDetail,
+    name: 'Post',
+    meta: {
+      parentPath: 'Posts',
+      requiresAuth: true,
+    }
+  }
+
 ]
 
 export default routes

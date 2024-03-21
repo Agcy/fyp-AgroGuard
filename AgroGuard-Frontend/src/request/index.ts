@@ -3,7 +3,6 @@ import axios from 'axios'
 
 const service = axios.create({
   baseURL: 'http://localhost:8080/api',
-  timeout: 60000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -11,18 +10,35 @@ const service = axios.create({
   },
 })
 
+// 定义白名单路径
+// const authPathRegex = /^\/api\/auth\//;
+
 // 添加请求拦截器
 service.interceptors.request.use(
   function (config) {
-    config.headers.token = localStorage.getItem('token')
-    return config
+    // 定义一个白名单路径的正则表达式
+    const authPathRegex = /^\/api\/auth\//;
+    // 确保 config.url 是一个字符串
+    const url = config.url || '';
+
+    // 检查当前请求的 URL 是否在白名单中
+    if (!authPathRegex.test(url)) {
+      // 如果不在白名单中，则尝试添加 token 到请求头
+      const token = localStorage.getItem('app/token');
+      if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+        // config.headers.append(`Bearer ${token}`)
+        console.log(config.headers)
+      }
+    }
+
+    return config;
   },
   function (error) {
-    // 对请求错误做些什么
-    console.log(error)
-    return Promise.reject(error)
+    console.log(error);
+    return Promise.reject(error);
   }
-)
+);
 
 // 添加响应拦截器
 service.interceptors.response.use(

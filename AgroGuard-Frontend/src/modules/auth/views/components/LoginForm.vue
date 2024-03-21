@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import useStore from 'store'
-import {apiSignIn} from "myApi/user-api/signin-api";
+import {apiSignIn} from "myApi/auth-api/signin-api";
 import { MailIcon, LockOpenIcon } from '@heroicons/vue/solid'
 import {AUTH_TOKEN} from "core/constants";
 
@@ -100,6 +100,7 @@ export default defineComponent({
             id: data.id,
             username: data.username,
             email: data.email,
+            avatarUrl: data.avatarUrl,
             roles: data.roles,
           };
           const token = data.token; // 从响应中获取 token

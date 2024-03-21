@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import { MailIcon, LockOpenIcon } from '@heroicons/vue/solid'
-import { apiReset } from 'myApi/user-api/updatePwd-api'
+import { apiReset } from 'myApi/auth-api/updatePwd-api'
 import { ElMessage } from "element-plus";
 import { useRoute, useRouter } from 'vue-router';
 

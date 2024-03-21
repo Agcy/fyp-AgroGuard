@@ -25,18 +25,18 @@
                 <BreadCrumb :parentPath="route.meta.parentPath" :title="route.meta.title" />
               </div>
             </div>
-            <div class="w-1/2 text-right pt-px pr-px">
-              <el-button
-                size="small"
-                class="w-11.25 h-7 rounded font-semibold text-indigo-410 bg-white border-white hover:text-black hover:bg-white active:bg-slate-100 tracking-wide"
-                >New</el-button
-              >
-              <el-button
-                size="small"
-                class="w-14 h-7 rounded font-semibold text-indigo-410 bg-white border-white hover:text-black hover:bg-white active:bg-slate-100 tracking-wide"
-                >Filters</el-button
-              >
-            </div>
+<!--            <div class="w-1/2 text-right pt-px pr-px">-->
+<!--              <el-button-->
+<!--                size="small"-->
+<!--                class="w-11.25 h-7 rounded font-semibold text-indigo-410 bg-white border-white hover:text-black hover:bg-white active:bg-slate-100 tracking-wide"-->
+<!--                >New</el-button-->
+<!--              >-->
+<!--              <el-button-->
+<!--                size="small"-->
+<!--                class="w-14 h-7 rounded font-semibold text-indigo-410 bg-white border-white hover:text-black hover:bg-white active:bg-slate-100 tracking-wide"-->
+<!--                >Filters</el-button-->
+<!--              >-->
+<!--            </div>-->
           </div>
         </div>
 

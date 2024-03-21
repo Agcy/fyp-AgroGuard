@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { MailIcon } from '@heroicons/vue/solid'
-import { apiReqReset } from 'myApi/user-api/updatePwd-api'
+import { apiReqReset } from 'myApi/auth-api/updatePwd-api'
 import {ElMessage} from "element-plus";
 
 export default defineComponent({

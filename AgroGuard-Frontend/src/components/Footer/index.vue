@@ -2,7 +2,7 @@
   <div class="flex flex-wrap items-center md:justify-between w-full">
     <div class="xl:flex-6 xl:max-w-1/2 mx-auto md:mx-0">
       <div class="text-center lg:text-left text-muted">
-        © 2022
+        © 2024
         <a
           href="#"
           class="font-semibold ml-1 text-indigo-410 hover:text-indigo-410-active"
@@ -14,7 +14,7 @@
           href="#"
           class="font-semibold ml-1 text-indigo-410 hover:text-indigo-410-active"
           target="_blank"
-          >Creative Tim</a
+          >AgroGuard</a
         >
       </div>
     </div>

@@ -6,6 +6,7 @@ import com.api.agroguard.utils.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,7 +41,7 @@ public class WebSecurityConfig {
         //1. 添加 CORS配置信息
         CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
-        config.addAllowedOrigin("http://localhost:3000/");
+        config.addAllowedOrigin("http://localhost:3000");
         //是否发送 Cookie
         config.setAllowCredentials(true);
         //放行哪些请求方式
@@ -89,14 +90,15 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
                         .anyRequest().authenticated());
-
+        System.out.println("success and authorized");
         http.authenticationProvider(authenticationProvider());
-
+        System.out.println("success and authorized1253");
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
+        System.out.println("end");
         return http.build();
     }
 

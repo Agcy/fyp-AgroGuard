@@ -2,6 +2,19 @@ body {
   .el-card {
     @apply relative flex flex-col bg-clip-border break-words min-w-0 rounded-5 shadow-card cursor-auto text-primary-dark #{!important};
     --el-card-bg-color: white !important;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    }
   }
   .el-card .card-header {
     h3 {

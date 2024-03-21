@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -19,20 +20,20 @@ public class PostController {
     private PostService postService;
 
     // 创建帖子
-    @PostMapping("/{username}")
-    public ResponseEntity<?> createPost(@PathVariable String username, @RequestBody PostRequest post, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if (!username.equals(userDetails.getUsername())) {
-            return ResponseEntity.badRequest().body(null); // 或者返回一个合适的错误响应
-        }
+    @PostMapping("/addPost")
+    public ResponseEntity<?> createPost(@RequestBody PostRequest post, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
 
         PostDO postDO = new PostDO();
-        postDO.setUserId(username); // 使用用户名作为userId
+        postDO.setUserId(userDetails.getId()); // 使用用户名作为userId
         postDO.setUserName(userDetails.getUsername());
         postDO.setTitle(post.getTitle());
         postDO.setContent(post.getContent());
         postDO.setBase64Image(post.getBase64Imgs());
         postDO.setCreatedAt(LocalDateTime.now());
         postDO.setUpdatedAt(LocalDateTime.now());
+
+        postService.createPost(postDO);
 
         return ResponseEntity.ok(new MessageResponse("Post Uploaded"));
     }
@@ -68,5 +69,15 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    // 其他方法省略...
+    // 获取所有帖子
+    @GetMapping("/getAll")
+    public List<PostDO> getAllPost(){
+        return postService.getAllPosts();
+    }
+
+    // 获取单个帖子
+    @GetMapping("post/{postId}")
+    public PostDO getSinglePost(@PathVariable String postId) {
+        return postService.getPostById(postId);
+    }
 }

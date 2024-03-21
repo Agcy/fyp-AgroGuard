@@ -31,6 +31,8 @@ public class UserDO {
     @Size(max = 20)
     private String name;
 
+    private String AvatarUrl;
+
     @NotBlank
     @Size(max = 50)
     @Email

@@ -24,6 +24,7 @@ export const useState = defineStore({
     login(token: string, user: any) {
       localStorage.setItem(AUTH_TOKEN, token); // 更新localStorage中的token
       this.setUser(user); // 更新用户状态和认证状态
+      console.log(localStorage)
     },
     logout() {
       localStorage.removeItem(AUTH_TOKEN); // 清除localStorage中的token

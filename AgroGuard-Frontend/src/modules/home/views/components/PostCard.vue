@@ -1,6 +1,6 @@
 <template>
 
-  <el-card class="post-card" :body-style="{ padding: '20px' }">
+  <el-card class="post-card bg-yellow-50" :body-style="{ padding: '20px' }">
     <router-link :to="`/posts/${post.id}`" class="post-card-link">
       <div v-if="post.base64Image.length > 0">
         <img :src="post.base64Image[0]" class="post-image" alt="Type Image">
@@ -12,7 +12,7 @@
       </div>
     </router-link>
     <div class="post-footer">
-      <div><img src="" alt="">{{ post.userName }}
+      <div><el-avatar :src="user?.avatarUrl" class="review-avatar"/>{{ post.userName }}
         <el-icon
           @click.stop.prevent="handleLikeClick"
           class="like-button w-6 h-6">

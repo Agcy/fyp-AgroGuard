@@ -33,6 +33,8 @@ const Profile = () => import('modules/profile/views/index.vue')
 const Map = () => import('modules/map/views/index.vue')
 const Posts = () => import('modules/home/views/index.vue')
 const PostDetail = () => import('modules/home/views/PostDetailPage.vue')
+const ChatRoom = () => import('modules/chat/views/index.vue')
+const Detection = () => import('modules/detection/views/index.vue')
 
 const ComponentLayout = () => import('components/ComponentLayout/index.vue')
 
@@ -239,6 +241,30 @@ const routes = [
     meta: {
       parentPath: 'Posts',
       requiresAuth: true,
+    }
+  },
+  {
+    path: '/chat',
+    component: ChatRoom,
+    name: 'Chat',
+    meta: {
+      title: 'Chat',
+      parentPath: 'Home',
+      requiresAuth: true,
+      icon: DocumentTextIcon,
+      color: 'text-red-410',
+    }
+  },
+  {
+    path: '/detection',
+    component: Detection,
+    name: 'Detection',
+    meta: {
+      title: 'Detection',
+      parentPath: 'Home',
+      requiresAuth: true,
+      icon: DocumentTextIcon,
+      color: 'text-red-410',
     }
   }
 

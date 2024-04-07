@@ -7,9 +7,9 @@
     >
       <navigation />
       <div
-        class="w-full h-38 relative bg-transparent border-none"
+        class="w-full h-38 relative border-none bg-green-700"
         :class="{
-          'bg-indigo-410': !route.meta.isDarkBackground,
+          'bg-green-700': !route.meta.isDarkBackground,
         }"
       >
         <div
@@ -40,14 +40,14 @@
           </div>
         </div>
 
-        <router-view v-slot="{ Component }">
+        <router-view v-slot="{ Component }" class="bg-green-50">
           <component
             :is="Component"
             :class="{ 'py-1.25 px-4 md:px-7.5 lg:px-6.2': !route.meta.isFullWidthLayout }"
           />
         </router-view>
 
-        <div class="w-full py-8 mx-auto px-4 md:px-7.5 lg:px-7.15">
+        <div class="w-full py-8 mx-auto px-4 md:px-7.5 lg:px-7.15 bg-green-900">
           <Footer />
         </div>
       </div>

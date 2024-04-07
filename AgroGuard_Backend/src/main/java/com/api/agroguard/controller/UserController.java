@@ -1,5 +1,6 @@
 package com.api.agroguard.controller;
 
+import com.api.agroguard.dto.UserDTO;
 import com.api.agroguard.exception.ResourceNotFoundException;
 import com.api.agroguard.model.UserDO;
 import com.api.agroguard.repository.UserRepository;
@@ -17,7 +18,6 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin("*")
 public class UserController {
 
     @Autowired
@@ -87,6 +87,41 @@ public class UserController {
         userRepository.delete(user);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{userId}/follow/{followUserId}")
+    public ResponseEntity<String> followUser(@PathVariable String userId, @PathVariable String followUserId) {
+        userService.followUser(userId, followUserId);
+        return ResponseEntity.ok("Followed successfully");
+    }
+
+    @PostMapping("/{userId}/unfollow/{followUserId}")
+    public ResponseEntity<String> unfollowUser(@PathVariable String userId, @PathVariable String followUserId) {
+        userService.unfollowUser(userId, followUserId);
+        return ResponseEntity.ok("Unfollowed successfully");
+    }
+
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<List<UserDTO>> getFollowingUsers(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.getFollowingUsers(userId));
+    }
+
+    @GetMapping("/{userId}/followers")
+    public ResponseEntity<List<UserDTO>> getFollowers(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.getFollowers(userId));
+    }
+
+    @GetMapping("/{userId}/mutual-follows")
+    public ResponseEntity<List<UserDTO>> getMutualFollows(@PathVariable String userId) {
+        List<UserDTO> mutualFollows = userService.getMutualFollows(userId);
+        return ResponseEntity.ok(mutualFollows);
+    }
+
+    @GetMapping("/{userId}/follows-status")
+    public ResponseEntity<Map<String, Boolean>> getFollowsStatus(@PathVariable String userId, @RequestParam String targetUserId) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("follows", userService.checkFollowsStatus(userId, targetUserId));
         return ResponseEntity.ok(response);
     }
 }

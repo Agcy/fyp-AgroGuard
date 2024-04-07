@@ -2,16 +2,13 @@ import axios from 'axios'
 
 
 const service = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: 'http://localhost:8081/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
   },
 })
-
-// 定义白名单路径
-// const authPathRegex = /^\/api\/auth\//;
 
 // 添加请求拦截器
 service.interceptors.request.use(
@@ -59,5 +56,4 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default service

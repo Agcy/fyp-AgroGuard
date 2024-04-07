@@ -7,7 +7,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.validation.constraints.Email;
@@ -52,6 +54,14 @@ public class UserDO {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    private List<String> following = new ArrayList<>();
+    private List<String> followers = new ArrayList<>();
+
+    private List<String> likedPosts = new ArrayList<>();
+
+    private boolean isOnline;
+    private LocalDateTime lastSeen;
 
     public UserDO(String name, String email, String password) {
         this.name = name;

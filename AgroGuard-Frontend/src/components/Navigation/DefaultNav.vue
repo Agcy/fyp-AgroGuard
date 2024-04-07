@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex items-center bg-default border mx-0 py-2 px-3.25 pl-2.75 md:px-7.25 shadow-sm h-18.5 md:h-19.75"
+    class="flex items-center bg-green-700 border mx-0 py-2 px-3.25 pl-2.75 md:px-7.25 shadow-sm h-18.5 md:h-19.75"
     :class="{
-      'bg-indigo-410 border-indigo-410 border-b-slate-50/10': !route.meta.isDarkBackground,
+      'bg-green-700 border-indigo-410 border-b-slate-50/10': !route.meta.isDarkBackground,
       'border-default border-b-cyan-30': route.meta.isDarkBackground,
     }"
   >
@@ -302,8 +302,8 @@ import {
 import { MenuIcon, MenuAlt1Icon, SearchIcon, SearchCircleIcon } from '@heroicons/vue/outline'
 import useStore from 'store'
 import { useRoute } from 'vue-router'
-import Logo_Url from '@/assets/images/ltv_logo.png'
-import John_Snow_Url from '@/assets/images/John_Snow.png'
+import Logo_Url from '../../assets/images/ltv_logo.png'
+import John_Snow_Url from '../../assets/images/John_Snow.png'
 export default defineComponent({
   name: 'DefaultNav',
   components: {

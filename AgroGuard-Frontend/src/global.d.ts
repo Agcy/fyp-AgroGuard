@@ -4,3 +4,5 @@ interface ElementForm {
   clearValidate: (props?: string | string[]) => void
   validateField: (props: string | string[], cb: ValidateFieldCallback) => void
 }
+
+declare module 'rollup-plugin-polyfill-node';

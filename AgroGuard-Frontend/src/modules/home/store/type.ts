@@ -2,6 +2,8 @@ export interface Post {
   id: string;
   title: string;
   content: string;
+  userId: string;
+  userAvatar: string;
   base64Image: string[];
   userName: string;
   updatedAt: string;

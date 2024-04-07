@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogVisible = true">添加帖子</el-button>
+    <el-button type="primary" @click="dialogVisible = true" class="bg-green-500">Create Your Post</el-button>
     <el-dialog v-model="dialogVisible" title="添加新帖子">
       <div>
         <el-upload

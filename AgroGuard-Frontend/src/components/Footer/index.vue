@@ -1,18 +1,18 @@
 <template>
   <div class="flex flex-wrap items-center md:justify-between w-full">
     <div class="xl:flex-6 xl:max-w-1/2 mx-auto md:mx-0">
-      <div class="text-center lg:text-left text-muted">
+      <div class="text-center lg:text-left text-gray-200">
         © 2024
         <a
           href="#"
-          class="font-semibold ml-1 text-indigo-410 hover:text-indigo-410-active"
+          class="font-semibold ml-1 text-green-400 hover:text-indigo-410-active"
           target="_blank"
-          >LTV</a
+          >SETU</a
         >
         &amp;
         <a
           href="#"
-          class="font-semibold ml-1 text-indigo-410 hover:text-indigo-410-active"
+          class="font-semibold ml-1 text-green-400 hover:text-indigo-410-active"
           target="_blank"
           >AgroGuard</a
         >
@@ -21,27 +21,27 @@
     <div class="xl:flex-6 xl:max-w-1/2 mx-auto md:mx-0">
       <div class="flex flex-wrap mb-0 pl-0 justify-center lg:justify-end gap-x-6 gap-y-2">
         <div class="">
-          <a href="#" class="text-sm text-dark-lighter hover:text-indigo-410" target="_blank"
+          <a href="#" class="text-sm text-green-400 hover:text-gray-100" target="_blank"
             >LTV</a
           >
         </div>
         <div class="">
-          <a href="#" class="text-sm text-dark-lighter hover:text-indigo-410" target="_blank"
+          <a href="#" class="text-sm text-green-400 hover:text-gray-100" target="_blank"
             >Creative Tim</a
           >
         </div>
         <div class="">
-          <a href="#" class="text-sm text-dark-lighter hover:text-indigo-410" target="_blank"
+          <a href="#" class="text-sm text-green-400 hover:text-gray-100" target="_blank"
             >About Us</a
           >
         </div>
         <div class="">
-          <a href="#" class="text-sm text-dark-lighter hover:text-indigo-410" target="_blank"
+          <a href="#" class="text-sm text-green-400 hover:text-gray-100" target="_blank"
             >Blog</a
           >
         </div>
         <div class="">
-          <a href="#" class="text-sm text-dark-lighter hover:text-indigo-410" target="_blank"
+          <a href="#" class="text-sm text-green-400 hover:text-gray-100" target="_blank"
             >MIT License</a
           >
         </div>

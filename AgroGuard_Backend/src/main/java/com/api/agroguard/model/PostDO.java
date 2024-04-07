@@ -26,6 +26,8 @@ public class PostDO {
     @NotBlank
     private String userName;
     @NotBlank
+    private String userAvatar;
+    @NotBlank
     private String imageId;
     @NotBlank
     private LocalDateTime createdAt; // 发布时间

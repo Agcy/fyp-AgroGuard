@@ -16,10 +16,6 @@ export default defineComponent({
     <div>
       <PostDetail/>
     </div>
-
-    <div>
-      <CreatePost/>
-    </div>
   </div>
 
 </template>

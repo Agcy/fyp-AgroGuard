@@ -33,9 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            System.out.println("123123"+request);
             String jwt = parseJwt(request);
-            System.out.println("345345"+jwt);
             if (jwt != null) {
                 logger.info("JWT Token found in request headers: {}", jwt);
 
@@ -63,11 +61,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 
     private String parseJwt(HttpServletRequest request) {
+        // If Authorization header is not found or does not contain a Bearer token, try to get the token from URL parameters
+        String tokenParam = request.getParameter("token");
+        if (StringUtils.hasText(tokenParam)) {
+            return tokenParam;
+        }
+
         String headerAuth = request.getHeader("Authorization");
-        System.out.println("789789"+headerAuth);
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7, headerAuth.length());
         }
+
 
         return null;
     }

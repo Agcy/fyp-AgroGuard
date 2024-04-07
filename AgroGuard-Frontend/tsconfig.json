@@ -29,9 +29,10 @@
       "utils/*": ["src/utils/*"],
       "mixins": ["src/mixins/index.ts"],
       "request": ["src/request/index.ts"],
+      "service/*": ["src/service/*"],
       "myApi/*": ["src/api/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/global.d.ts"],
   "exclude": ["node_modules", "node_modules/**"]
 }

@@ -33,6 +33,7 @@ export default defineConfig({
       mixins: resolvePath('mixins'),
       myApi: resolvePath('api'),
       request: resolvePath('request'),
+      service: resolvePath('service'),
       '@': path.resolve(__dirname, './src'),
     },
   },
@@ -68,5 +69,7 @@ export default defineConfig({
     },
     sourcemap: true,
   },
-  optimizeDeps: {},
+  optimizeDeps: {
+    include: ['sockjs-client']
+  },
 })

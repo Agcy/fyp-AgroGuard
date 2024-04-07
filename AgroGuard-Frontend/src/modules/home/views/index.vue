@@ -6,17 +6,22 @@
       :post="post"
     />
   </div>
+  <div>
+    <CreatePost/>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import PostCard from './components/PostCard.vue'; // 确保路径正确
 import { apiGetAllPost } from 'myApi/post-api/getall-api'; // 更新为正确的导入路径
-import { Post } from '../store/type'; // 更新为正确的导入路径
+import { Post } from '../store/type';
+import CreatePost from "modules/home/views/components/CreatePost.vue"; // 更新为正确的导入路径
 
 export default defineComponent({
   name: 'PostsList',
   components: {
+    CreatePost,
     PostCard,
   },
   setup() {

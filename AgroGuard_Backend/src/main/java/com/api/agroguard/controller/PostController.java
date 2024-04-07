@@ -27,6 +27,7 @@ public class PostController {
         PostDO postDO = new PostDO();
         postDO.setUserId(userDetails.getId()); // 使用用户名作为userId
         postDO.setUserName(userDetails.getUsername());
+        postDO.setUserAvatar(userDetails.getAvatarUrl());
         postDO.setTitle(post.getTitle());
         postDO.setContent(post.getContent());
         postDO.setBase64Image(post.getBase64Imgs());

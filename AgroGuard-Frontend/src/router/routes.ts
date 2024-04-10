@@ -35,6 +35,8 @@ const Posts = () => import('modules/home/views/index.vue')
 const PostDetail = () => import('modules/home/views/PostDetailPage.vue')
 const ChatRoom = () => import('modules/chat/views/index.vue')
 const Detection = () => import('modules/detection/views/index.vue')
+const Library = () => import('modules/library/views/index.vue')
+const DiseaseDetailPage = () => import('modules/library/views/DiseaseDetailPage.vue')
 
 const ComponentLayout = () => import('components/ComponentLayout/index.vue')
 
@@ -265,6 +267,28 @@ const routes = [
       requiresAuth: true,
       icon: DocumentTextIcon,
       color: 'text-red-410',
+    }
+  },
+  {
+    path: '/library',
+    component: Library,
+    name: 'Library',
+    meta: {
+      title: 'Library',
+      parentPath: 'Home',
+      requiresAuth: true,
+      icon: DocumentTextIcon,
+      color: 'text-red-410',
+    }
+  },
+  {
+    path: '/library/:diseaseId',
+    component: DiseaseDetailPage,
+    name: 'DiseaseDetail',
+    meta: {
+      title: 'DiseaseDetail',
+      parentPath: 'Library',
+      requiresAuth: true,
     }
   }
 

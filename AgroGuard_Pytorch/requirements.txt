@@ -132,3 +132,11 @@ webencodings==0.5.1
 websocket-client @ file:///C:/ci_311/websocket-client_1676426063281/work
 Werkzeug==3.0.1
 win-inet-pton @ file:///C:/ci_311/win_inet_pton_1676425458225/work
+
+tqdm~=4.65.0
+matplotlib~=3.8.0
+numpy~=1.26.3
+pillow~=10.0.1
+pandas~=2.1.4
+yaml~=0.2.5
+pyyaml~=6.0.1

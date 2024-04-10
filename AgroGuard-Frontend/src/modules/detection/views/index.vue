@@ -3,7 +3,7 @@ import ImageUpload from './components/Detection.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'PostsList',
+  name: 'Detection',
   components: {
     ImageUpload
   },

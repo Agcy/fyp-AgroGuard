@@ -1,32 +1,34 @@
 <template>
+  <div class="posts-container">
+    <el-card class="post-card bg-yellow-50" :body-style="{ padding: '20px' }">
+      <router-link :to="`/posts/${post.id}`" class="post-card-link">
+        <div v-if="post.base64Image.length > 0">
+          <img :src="post.base64Image[0]" class="post-image" alt="Type Image">
+        </div>
+        <div style="margin-top: 20px;">
+          <h3>{{ post.title }}</h3>
+          <p>{{ contentPreview }}</p>
 
-  <el-card class="post-card bg-yellow-50" :body-style="{ padding: '20px' }">
-    <router-link :to="`/posts/${post.id}`" class="post-card-link">
-      <div v-if="post.base64Image.length > 0">
-        <img :src="post.base64Image[0]" class="post-image" alt="Type Image">
+        </div>
+      </router-link>
+      <div class="post-footer">
+        <div>
+          <el-avatar :src="user?.avatarUrl" class="review-avatar"/>
+          {{ post.userName }}
+          <el-icon
+            @click.stop.prevent="handleLikeClick"
+            class="like-button w-6 h-6">
+            <component
+              :is="HeartIcon"
+              :class="['icon', isLiked ? 'text-red-500' : 'text-gray-400', scaleClass]"
+            />
+          </el-icon>
+          <!--          <HeartIcon />-->
+
+        </div>
       </div>
-      <div style="margin-top: 20px;">
-        <h3>{{ post.title }}</h3>
-        <p>{{ contentPreview }}</p>
-
-      </div>
-    </router-link>
-    <div class="post-footer">
-      <div><el-avatar :src="user?.avatarUrl" class="review-avatar"/>{{ post.userName }}
-        <el-icon
-          @click.stop.prevent="handleLikeClick"
-          class="like-button w-6 h-6">
-          <component
-          :is="HeartIcon"
-          :class="['icon', isLiked ? 'text-red-500' : 'text-gray-400', scaleClass]"
-          />
-        </el-icon>
-<!--          <HeartIcon />-->
-
-      </div>
-    </div>
-  </el-card>
-
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -72,9 +74,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* 根据需要调整，用于设置卡片之间的间距 */
+  justify-content: flex-start; /* 根据需要调整，控制如何分布卡片 */
+}
 .post-card {
   width: 300px; /* 根据需要调整 */
   margin-bottom: 20px;
+  height: auto;
 }
 
 .post-image {
@@ -107,6 +116,7 @@ export default defineComponent({
     transform: scale(1.1);
   }
 }
+
 .icon {
   animation: scale-up 0.15s ease-in-out forwards;
 }

@@ -5,6 +5,7 @@ const { visualizer } = require('rollup-plugin-visualizer')
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 const resolvePath = (dir: string) => {
   return path.resolve(__dirname, 'src', dir)
@@ -13,6 +14,8 @@ const resolvePath = (dir: string) => {
 export default defineConfig({
   plugins: [
     vue(),
+    vueJsx(),
+    // "@vue/babel-plugin-jsx",
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
@@ -68,8 +71,5 @@ export default defineConfig({
       },
     },
     sourcemap: true,
-  },
-  optimizeDeps: {
-    include: ['sockjs-client']
   },
 })

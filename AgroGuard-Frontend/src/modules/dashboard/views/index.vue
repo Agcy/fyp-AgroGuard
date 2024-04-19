@@ -7,7 +7,7 @@
     <div class="mt-6">
       <div class="flex flex-wrap">
         <div class="lg:flex-8 lg:max-w-2/3 w-full lg:mb-0 lg:pr-3.5 mb-6">
-          <GradientLineChart />
+          <AgricultureLineChart />
         </div>
         <div class="lg:flex-4 lg:max-w-1/3 w-full lg:pl-3.5">
           <TotalBarChart />
@@ -38,10 +38,12 @@ import TotalBarChart from './components/TotalBarChart.vue'
 // Table
 import SocialTrafficTable from './components/SocialTrafficTable.vue'
 import PageVisitTable from './components/PageVisitTable.vue'
+import AgricultureLineChart from "./components/AgricultureLineChart.vue";
 
 export default defineComponent({
   name: 'DashBoard',
   components: {
+    AgricultureLineChart,
     AnalysisCard,
     GradientLineChart,
     TotalBarChart,

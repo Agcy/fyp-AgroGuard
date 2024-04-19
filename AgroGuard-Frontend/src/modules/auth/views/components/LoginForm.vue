@@ -7,8 +7,8 @@
         </div>
         <div class="pb-6 flex flex-nowrap text-center justify-center">
           <el-button class="bg-white border-white" href="#">
-            <img src="@/assets/images/github.png" alt="" class="h-4 w-4" />
-            <span class="pl-4 text-indigo-410">Github</span>
+            <img src="@/assets/images/facebook.png" alt="" class="h-4 w-4" />
+            <span class="pl-4 text-indigo-410">Facebook</span>
           </el-button>
           <el-button class="bg-white border-white" href="#">
             <img src="@/assets/images/google.png" alt="" class="h-4 w-4" />

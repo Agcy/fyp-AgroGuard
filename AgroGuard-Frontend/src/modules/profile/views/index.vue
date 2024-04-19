@@ -6,7 +6,7 @@
       class="absolute block w-full inset-0 opacity-90 bg-gradient-to-r from-dark to-dark-100"
     ></span>
     <div class="w-full px-4 lg:px-7.5 lg:max-w-[42%] absolute top-[15%] lg:top-1/3 break-normal">
-      <h1 class="text-white text-2.75 mb-2">Hello Admin</h1>
+      <h1 class="text-white text-2.75 mb-2">Hello {{ user?.username }}</h1>
       <p class="text-white text-base mb-12 leading-[1.7]">
         This is your profile page. You can see the progress you've made with your work and manage
         your projects or assigned tasks
@@ -45,7 +45,7 @@
         <!-- Admin card -->
         <div class="col-span-6">
           <ProfileCard
-            :avatarImg="avatarUrl"
+            :avatarImg="user?.avatarUrl"
             :backgroundImg="avatarBackgroundUrl"
             name="Admin"
             :age="67"
@@ -79,6 +79,7 @@ import EditProfileForm from './components/EditProfileForm.vue'
 import ProgressTrack from './components/ProgressTrack.vue'
 import ProfileCard from '../../cards/views/components/ProfileCard.vue'
 
+import {useState} from 'modules/auth/store/state'
 import backGround from '@/assets/images/profile-cover.jpg'
 import avatarUrl from '@/assets/images/team-3.jpg'
 import avatarBackgroundUrl from '@/assets/images/window-purple-image.jpg'
@@ -93,9 +94,10 @@ export default defineComponent({
     ProfileCard,
   },
   setup(_) {
+    const user = useState().user
     return {
       backGround,
-      avatarUrl,
+      user,
       avatarBackgroundUrl,
     }
   },

@@ -6,6 +6,7 @@ export interface AuthState {
     email: string;
     avatarUrl: string;
     roles: string[];
+    onlineStatus: boolean;
   };
 }
 

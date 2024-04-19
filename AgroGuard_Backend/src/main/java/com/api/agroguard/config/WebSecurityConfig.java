@@ -45,6 +45,7 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:5173");
         //是否发送 Cookie
         config.setAllowCredentials(true);
         //放行哪些请求方式
@@ -94,8 +95,11 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "**").permitAll()
-                        .requestMatchers("/chat/**").permitAll()
-                        .requestMatchers("ws://localhost:8081/chat/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/app/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/ws/**", "/app/**", "/ws").permitAll()
+                        .requestMatchers("/api/dashboard/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
                         .anyRequest().authenticated());

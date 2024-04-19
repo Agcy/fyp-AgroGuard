@@ -57,7 +57,7 @@
       <div class="p-8">
         <div class="text-center text-primary-dark">
           <h3 class="font-semibold pb-2">
-            {{ name }}<span class="font-thin">, {{ age }}</span>
+            {{ user?.username }}<span class="font-thin">, {{ age }}</span>
           </h3>
           <h5 class="font-light">
             <el-icon :size="12">
@@ -79,6 +79,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { Location } from '@element-plus/icons-vue'
+import {useState} from "modules/auth/store/state";
+
 export default defineComponent({
   name: 'ProfileCard',
   components: {
@@ -125,12 +127,14 @@ export default defineComponent({
     },
   },
   setup() {
+    const user = useState().user
     const isHover = ref(false)
     const hoverCheck = (b: boolean) => {
       isHover.value = b
     }
     return {
       isHover,
+      user,
       hoverCheck,
     }
   },

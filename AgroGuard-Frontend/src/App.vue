@@ -2,6 +2,8 @@
   <el-config-provider :zIndex="9999">
     <AuthLayout v-if="isAuthLayout" />
     <DefaultLayout v-else />
+<!--    <notifications position="top center" />-->
+<!--    <RouterView />-->
   </el-config-provider>
 </template>
 

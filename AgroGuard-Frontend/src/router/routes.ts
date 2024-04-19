@@ -33,10 +33,12 @@ const Profile = () => import('modules/profile/views/index.vue')
 const Map = () => import('modules/map/views/index.vue')
 const Posts = () => import('modules/home/views/index.vue')
 const PostDetail = () => import('modules/home/views/PostDetailPage.vue')
-const ChatRoom = () => import('modules/chat/views/index.vue')
+const WelcomeView = () => import('modules/chat/views/WelcomeView.vue')
 const Detection = () => import('modules/detection/views/index.vue')
 const Library = () => import('modules/library/views/index.vue')
 const DiseaseDetailPage = () => import('modules/library/views/DiseaseDetailPage.vue')
+const HomeView = () => import('modules/chat/views/HomeView.vue')
+const Chat = () => import('modules/chat/views/WelcomeView.vue')
 
 const ComponentLayout = () => import('components/ComponentLayout/index.vue')
 
@@ -246,8 +248,8 @@ const routes = [
     }
   },
   {
-    path: '/chat',
-    component: ChatRoom,
+    path: '/welcome-chat',
+    component: Chat,
     name: 'Chat',
     meta: {
       title: 'Chat',
@@ -289,6 +291,18 @@ const routes = [
       title: 'DiseaseDetail',
       parentPath: 'Library',
       requiresAuth: true,
+    }
+  },
+  {
+    path: '/chat',
+    component: HomeView,
+    name: 'TestWebsocket',
+    meta: {
+      title: 'TestWebsocket',
+      parentPath: 'Home',
+      requiresAuth: true,
+      // icon: DocumentTextIcon,
+      // color: 'text-red-410',
     }
   }
 

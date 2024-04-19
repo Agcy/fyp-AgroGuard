@@ -82,7 +82,7 @@ import { apiAddToFollow } from 'myApi/user-api/addToFollow';
 import { apiUnFollow } from 'myApi/user-api/unFollow';
 import {ChatDotRound} from "@element-plus/icons-vue";
 import { apiCreateChatRoom } from 'myApi/chat-api/createChatRoom';
-import {useChatStore} from 'modules/chat/store/store';
+// import {useChatStore} from 'modules/chat/store/Message';
 import router from 'router';
 
 export default defineComponent({
@@ -100,7 +100,7 @@ export default defineComponent({
     const postStore = usePostStore();
     const route = useRoute(); // 使用useRoute获取当前路由实例
     const store = useState();
-    const chatStore = useChatStore();
+    // const chatStore = useChatStore();
     const user = computed(() => store.user)
     const currentChatRoom = {
       id: '',
@@ -138,7 +138,7 @@ export default defineComponent({
             currentChatRoom.id = res.data.id;
             currentChatRoom.name = res.data.name;
             currentChatRoom.participantsId = res.data.participants;
-            chatStore.fetchChatRooms(currentChatRoom);
+            // chatStore.fetchChatRooms(currentChatRoom);
             ElMessage.success('Chat room created successfully');
 
           }else{

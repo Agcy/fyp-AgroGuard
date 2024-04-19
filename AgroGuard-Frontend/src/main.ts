@@ -10,14 +10,37 @@ import * as process from 'process';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import {
+  faEllipsis,
+  faPaperPlane,
+  faPlusCircle,
+  faSearch,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
+import type { StoreData } from "modules/chat/store/types/StoreData";
 import 'sweetalert2/dist/sweetalert2.min.css'
-
+import Notifications from "@kyvg/vue3-notification";
 import './index.css'
 import router from './router'
-import Vuex from "vuex";
+import Vuex, {createStore, Store} from "vuex";
 // create new app instance
+const icons = [faSearch, faEllipsis, faPaperPlane, faPlusCircle, faTimes];
+icons.forEach((icon) => library.add(icon));
+
+const store: Store<StoreData> = createStore({
+  state() {
+    return {
+      user: {
+        username: '', // 根据实际情况提供用户名的初始值
+      },
+      // stompClient: undefined,
+      isConnected: false,
+      messages: {},
+      groupById: {},
+    };
+  },
+});
 const createNewApp = () => {
   const app = createApp({
     render: () => h(App),
@@ -32,6 +55,8 @@ const createNewApp = () => {
   app.use(AppComponents)
   app.use(createPinia())
   app.use(VueSweetAlert2)
+  app.use(store)
+  app.use(Notifications);
 
   app.mount('#app')
   app.config.performance = true

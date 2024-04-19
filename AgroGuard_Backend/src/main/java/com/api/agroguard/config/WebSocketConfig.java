@@ -25,8 +25,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //定义一个前缀为“/ws/ep”的 endPoint，并开启 sockjs 支持，允许跨域
-        registry.addEndpoint("/ws/chat")
+        registry.addEndpoint("/ws")
                 .setAllowedOrigins("http://localhost:3000")
+                .setAllowedOrigins("http://localhost:5173")
                 .withSockJS(); // 添加握手拦截器
     }
 
@@ -36,12 +37,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         消息代理的前缀，即如果消息代理的前缀为指定的字符，就会将消息转发给消息代理broker
         在由消息代理将消息广播给当前的连接的客户端。
         */
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/chatroom", "/user");
 //                .setHeartbeatValue(new long[]{10000, 20000});
         /*
        前缀为“/app”的 destination 可以通过＠MessageMapping 注解的方法处理，
        而其他 destination （例如“/topic”“/queue”）将被直接交给 broker 处理。
         */
         registry.setApplicationDestinationPrefixes("/app");
+        registry.setUserDestinationPrefix("/user");
     }
 }

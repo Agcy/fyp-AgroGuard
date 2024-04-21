@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="bg-green-300">
 <!--    <video autoplay muted loop id="myVideo">-->
 <!--      <source src="@/assets/face-678.mp4" type="video/mp4">-->
 <!--    </video>-->
@@ -59,27 +59,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.wrapper {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-}
 
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-}
-.input {
-  width: 50vw;
-}
-
-.button {
-  width: 200px;
-}
 </style>

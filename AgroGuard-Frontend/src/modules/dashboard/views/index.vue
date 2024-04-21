@@ -29,29 +29,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
 
-import AnalysisCard from 'modules/cards/views/components/AnalysisCard.vue'
+// import AnalysisCard from 'modules/cards/views/components/AnalysisCard.vue'
 // Chart
-import GradientLineChart from './components/GradientLineChart.vue'
+// import GradientLineChart from './components/GradientLineChart.vue'
 import TotalBarChart from './components/TotalBarChart.vue'
 // Table
 import SocialTrafficTable from './components/SocialTrafficTable.vue'
 import PageVisitTable from './components/PageVisitTable.vue'
 import AgricultureLineChart from "./components/AgricultureLineChart.vue";
-
+import { apiGetAgricultureData } from 'myApi/dashboard-api/agricultureData'
+import { AgricultureData } from '../store/types'
+import { ChartData } from '../store/types'
 export default defineComponent({
   name: 'DashBoard',
   components: {
     AgricultureLineChart,
-    AnalysisCard,
-    GradientLineChart,
     TotalBarChart,
     PageVisitTable,
     SocialTrafficTable,
   },
   setup() {
-    return {}
+
   },
 })
 </script>

@@ -5,125 +5,109 @@
         <div class="max-w-full basis-0 grow">
           <h3 class="mb-0 cursor-auto text-primary-dark">{{ title }}</h3>
         </div>
-        <div class="max-w-full basis-0 grow">
-          <div class="flex flex-wrap mb-0 pl-0 justify-end gap-x-3">
-            <div>
-              <el-button type="primary" size="small"> See all </el-button>
-            </div>
-          </div>
-        </div>
       </div>
-
       <div class="block overflow-x-auto w-full p-0">
-        <el-table :data="tableData" style="width: 100%" class="is-light">
-          <el-table-column label="PAGE NAME" min-width="200">
+        <el-table :data="paginatedData" style="width: 100%">
+          <el-table-column label="Source" prop="source" min-width="200">
             <template #default="scope">
-              <div class="flex items-center">
-                <span class="mb-0 text-0.8125 font-semibold cursor-auto text-dark-lighter">{{
-                  scope.row.pageName
-                }}</span>
-              </div>
+              {{ scope.row.source.name }}
             </template>
           </el-table-column>
-          <el-table-column label="VISITORS" min-width="150">
+          <el-table-column label="Title" prop="title" min-width="300">
             <template #default="scope">
-              <div class="flex items-center">
-                <span class="px-4 text-0.8125 font-normal cursor-auto text-dark-lighter">{{
-                  scope.row.visitorNumber
-                }}</span>
-              </div>
+              <a :href="scope.row.url" target="_blank">{{ scope.row.title }}</a>
             </template>
           </el-table-column>
-          <el-table-column label="UNIQUE USERS" min-width="150">
+          <el-table-column label="Description" prop="description" min-width="450">
             <template #default="scope">
-              <div class="flex items-center">
-                <span class="px-4 text-0.8125 font-normal text-dark-lighter">{{
-                  scope.row.userNumber
-                }}</span>
-              </div>
+              {{ scope.row.description }}
             </template>
           </el-table-column>
-          <el-table-column label="BOUNCE RATE" min-width="150">
+          <el-table-column label="Published At" prop="publishedAt" min-width="150">
             <template #default="scope">
-              <div class="flex items-center">
-                <div class="px-4 flex justify-center gap-1">
-                  <div>
-                    <ArrowNarrowUpIcon v-if="scope.row.rate > 45.0" class="w-4 h-4 text-success" />
-                    <ArrowNarrowDownIcon v-else class="w-4 h-4 text-warning" />
-                  </div>
-
-                  <span class="text-0.8125 font-normal text-dark-lighter"
-                    >{{ scope.row.rate }}%</span
-                  >
-                </div>
-              </div>
+              {{ new Date(scope.row.publishedAt).toLocaleDateString() }}
             </template>
           </el-table-column>
         </el-table>
+      </div>
+
+      <div class="pagination-container">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[10, 20, 30, 50]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="tableData.length">
+        </el-pagination>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { ArrowNarrowDownIcon, ArrowNarrowUpIcon } from '@heroicons/vue/outline'
 
-interface PageVisitInfo {
-  pageName: string
-  visitorNumber: string
-  userNumber: number
-  rate: number
-}
+<script lang="ts">
+import { defineComponent, ref, onMounted, computed } from 'vue'
+import { ElTable, ElTableColumn } from 'element-plus'
+import { apiGetNewsData } from 'myApi/dashboard-api/newsData'
+
 export default defineComponent({
-  name: 'PageVisitTable',
+  name: 'NewsTable',
   components: {
-    ArrowNarrowDownIcon,
-    ArrowNarrowUpIcon,
+    ElTable, ElTableColumn
   },
   props: {
     title: {
       type: String,
-      default: 'Page visits',
+      default: 'Latest Agricultural News',
     },
   },
   setup() {
-    const tableData: PageVisitInfo[] = [
-      {
-        pageName: '/argon/',
-        visitorNumber: '4,569',
-        userNumber: 340,
-        rate: 46.53,
-      },
-      {
-        pageName: '/argon/index.html',
-        visitorNumber: '3,985',
-        userNumber: 319,
-        rate: 46.53,
-      },
-      {
-        pageName: '/argon/charts.html',
-        visitorNumber: '3,513	',
-        userNumber: 294,
-        rate: 36.49,
-      },
-      {
-        pageName: '/argon/tables.html',
-        visitorNumber: '2,000',
-        userNumber: 147,
-        rate: 50.87,
-      },
-      {
-        pageName: '/argon/profile.html',
-        visitorNumber: '1,795',
-        userNumber: 190,
-        rate: 42.53,
-      },
-    ]
+    const currentPage = ref(1);
+    const pageSize = ref(20);
+    const tableData = ref([]);
+
+    const fetchNews = async () => {
+      try {
+        const newsData = await apiGetNewsData();
+        tableData.value = newsData.data.map(article => ({
+          source: article.source.name,
+          title: article.title,
+          url: article.url,
+          description: article.description,
+          publishedAt: article.publishedAt
+        }));
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      }
+    };
+
+    onMounted(fetchNews);
+
+    const paginatedData = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value;
+      const end = start + pageSize.value;
+      return tableData.value.slice(start, end);
+    });
+
+    const handleCurrentChange = (newPage) => {
+      currentPage.value = newPage;
+    };
+
+    const handleSizeChange = (newSize) => {
+      pageSize.value = newSize;
+    };
 
     return {
       tableData,
-    }
+      currentPage,
+      pageSize,
+      paginatedData,
+      handleCurrentChange,
+      handleSizeChange
+    };
   },
-})
+});
 </script>
+

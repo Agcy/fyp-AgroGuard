@@ -1,9 +1,10 @@
 import service from 'request'
 
-export function apiGetAgricultureData(code: string) {
+// @ts-ignore
+export function apiGetAgricultureData({region, commodity, year, item, period} = {}) {
   return service({
-    url: `/dashboard/agriculture/data`,
+    url: `/dashboard/supply-demand/agriculture-data`,
     method: 'get',
-    params: { code }
+    params: { region, commodity, year, item, period }
   })
 }

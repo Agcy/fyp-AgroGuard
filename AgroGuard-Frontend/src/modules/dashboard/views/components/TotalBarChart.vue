@@ -2,17 +2,25 @@
   <div class="w-full h-auto">
     <el-card>
       <template #header>
-        <div class="flex flex-wrap items-center -mx-3.75">
-          <div class="max-w-full basis-0 grow px-6">
-            <h6 class="uppercase text-muted tracking-0.625 mb-1">{{ title }}</h6>
-            <h2 class="mb-0">{{ subcription }}</h2>
+        <div class="flex flex-wrap items-center">
+          <div class="grow px-4">
+            <h2 class="text-dark-100">{{ selectedRegion }}</h2>
+            <h4 class="uppercase text-muted">{{ selectedCommodity }}</h4>
+
+          </div>
+          <div class="grow">
+            <el-select v-model="selectedCommodity" placeholder="Select commodity">
+              <el-option v-for="commodity in commodities" :key="commodity" :label="commodity" :value="commodity"></el-option>
+            </el-select>
+            <el-select v-model="selectedRegion" placeholder="Select region">
+              <el-option v-for="region in regions" :key="region" :label="region" :value="region"></el-option>
+            </el-select>
           </div>
         </div>
       </template>
       <div class="card-body">
         <BarChart
-          ref="totalChart"
-          :chartData="totalData"
+          :chart-data="chartData"
           :options="chartOptions"
           :height="350"
           class="h-83"
@@ -22,118 +30,79 @@
   </div>
 </template>
 
+
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
-import { BarChart } from 'vue-chart-3'
-import { Chart, registerables } from 'chart.js'
-Chart.register(...registerables)
+import { defineComponent, ref, watch, onMounted } from 'vue';
+import { BarChart } from 'vue-chart-3';
+import { Chart, registerables } from 'chart.js';
+import { apiGetAgricultureData } from 'myApi/dashboard-api/agricultureData';
+import {AgricultureData} from "modules/dashboard/store/types"; // Adjust the path as necessary
+
+Chart.register(...registerables);
 
 export default defineComponent({
   name: 'TotalBarChart',
   components: {
     BarChart,
   },
-  props: {
-    title: {
-      type: String,
-      default: 'Performance',
-    },
-    subcription: {
-      type: String,
-      default: 'Total Detections',
-    },
-  },
   setup() {
-    const totalChart = ref()
-    const totalData = computed(() => ({
-      labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [
-        {
-          label: ' Sales',
-          fill: true,
-          data: [25, 20, 30, 22, 17, 29],
-          backgroundColor: 'rgb(251 99 64)',
-          borderColor: 'rgb(251 99 64)',
-          borderRadius: Number.MAX_VALUE,
-          borderSkipped: false,
-          barThickness: 10,
-        },
-      ],
-    }))
-
+    const selectedCommodity = ref('wheat'); // Default selection
+    const commodities = ref(['wheat', 'corn', 'soybean', 'rice', 'soybean oil', 'oilseeds', 'cotton', 'grains', 'course grain']); // Example commodities
+    const regions = ref(['China', 'United Kingdom', 'Kazakhstan', 'India', 'Southeast Asia',
+      'Nigeria', 'Japan', 'Brazil', 'Bangladesh', 'Ukraine', 'Russia', 'European Union  5/', 'Canada', 'Australia', 'United States']); // Default region
+    const selectedRegion = ref('China'); // Default selection
+    const chartData = ref({});
     const chartOptions = ref({
-      elements: {
-        bar: {
-          borderWidth: 2,
-        },
-      },
       responsive: true,
       maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
       plugins: {
         legend: {
           display: false,
         },
       },
-      interaction: {
-        intersect: false,
-        mode: 'index',
-      },
-      scales: {
-        y: {
-          grid: {
-            drawBorder: false,
-            display: true,
-            drawOnChartArea: true,
-            drawTicks: false,
-            color: '#0000000d',
-            borderDash: [2, 2],
-          },
-          ticks: {
-            display: true,
-            padding: 10,
-            color: 'rgb(136 152 170)',
-            font: {
-              size: 12,
-              family: 'Open Sans',
-              style: 'normal',
-              lineHeight: 2,
-            },
-            callback: function (value: number) {
-              if (!(value % 10)) {
-                return value
-              }
-            },
-          },
-        },
-        x: {
-          grid: {
-            drawBorder: false,
-            display: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-            zeroLineColor: 'transparent',
-            borderDash: [5, 5],
-          },
-          ticks: {
-            display: true,
-            color: 'rgb(136 152 170)',
-            padding: 20,
-            font: {
-              size: 12,
-              family: 'Open Sans',
-              style: 'normal',
-              lineHeight: 2,
-            },
-          },
-        },
-      },
-    })
+    });
+    // items: ['Output', 'Total Supply', 'Trade 2/', 'Total Use 3/', 'Ending Stocks'] // Assuming these are the fields you're interested in
+
+    const fetchData = async () => {
+      const response = await apiGetAgricultureData({
+        region: selectedRegion.value,
+        commodity: selectedCommodity.value,
+      });
+
+      const data = response.data
+      updateChartData(data);
+    };
+
+    const updateChartData = (data: AgricultureData[]) => {
+      chartData.value = {
+        labels: data.map(d => d.item),
+        datasets: [{
+          label: `${selectedCommodity.value} in 2023/24`,
+          data: data.map(d => d.value),
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+    };
+
+    watch(selectedCommodity, fetchData, { immediate: true });
+    watch(selectedRegion, fetchData, { immediate: true });
 
     return {
-      totalChart,
-      totalData,
+      selectedCommodity,
+      commodities,
+      chartData,
       chartOptions,
-    }
-  },
-})
+      selectedRegion,
+      regions,
+    };
+  }
+});
 </script>
+

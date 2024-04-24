@@ -228,7 +228,7 @@
             <div class="flex flex-row items-center gap-1 md:gap-2 mb-1">
               <div class="pt-1">
                 <el-link :underline="false">
-                  <el-avatar :size="37" class="cursor-pointer" :src="Logo_Url" />
+                  <el-avatar :size="37" class="cursor-pointer" :src="userAvatar" />
                 </el-link>
               </div>
               <div class="hidden lg:block">
@@ -302,6 +302,7 @@ import {
 import { MenuIcon, MenuAlt1Icon, SearchIcon, SearchCircleIcon } from '@heroicons/vue/outline'
 import useStore from 'store'
 import { useRoute } from 'vue-router'
+import { useState } from 'modules/auth/store/state'
 import Logo_Url from '../../assets/images/ltv_logo.png'
 import John_Snow_Url from '../../assets/images/John_Snow.png'
 export default defineComponent({
@@ -321,6 +322,7 @@ export default defineComponent({
     SearchCircleIcon,
   },
   setup() {
+    const user = useState().user
     const route: any = useRoute()
     const store = useStore()
     const isPagesMenuOpen = ref(false)
@@ -329,6 +331,7 @@ export default defineComponent({
     const clickIconBell = ref(false)
     const clickIconMenu = ref(false)
     const showname = store.auth.user?.username
+    const userAvatar = user?.avatarUrl ? user.avatarUrl : user?.username.substring(0, 1).toUpperCase()
     const togglePagesMenu = () => {
       isSideMenuOpen.value = !isSideMenuOpen.value
     }
@@ -366,6 +369,7 @@ export default defineComponent({
       Logo_Url,
       John_Snow_Url,
       showname,
+      userAvatar
     }
   },
 })

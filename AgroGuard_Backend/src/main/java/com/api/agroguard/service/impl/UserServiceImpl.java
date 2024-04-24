@@ -1,5 +1,8 @@
 package com.api.agroguard.service.impl;
+
 import com.api.agroguard.exception.ResourceNotFoundException;
+import com.api.agroguard.model.PostDO;
+import com.api.agroguard.repository.PostRepository;
 import com.api.agroguard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.api.agroguard.model.UserDO;
@@ -18,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     public String createUser(UserDO user) {
@@ -71,11 +77,15 @@ public class UserServiceImpl implements UserService {
     public void followUser(String userId, String followUserId) {
         UserDO user = getUserById(userId);
         UserDO followUser = getUserById(followUserId);
-        System.out.println(user.getFollowing()+" "+followUser.getFollowers());
+        System.out.println(user.getFollowing() + " " + followUser.getFollowers());
+        List<String> following = user.getFollowing();
+        List<String> followers = followUser.getFollowers();
         if (!user.getFollowing().contains(followUserId)) {
-            user.getFollowing().add(followUserId);
-            followUser.getFollowers().add(userId);
-            System.out.println(user.getFollowing()+" "+followUser.getFollowers());
+            following.add(followUserId);
+            followers.add(userId);
+            user.setFollowing(following);
+            followUser.setFollowers(followers);
+            System.out.println(user.getFollowing() + " " + followUser.getFollowers());
             userRepository.save(user);
             userRepository.save(followUser);
         }
@@ -85,40 +95,61 @@ public class UserServiceImpl implements UserService {
     public void unfollowUser(String userId, String followUserId) {
         UserDO user = getUserById(userId);
         UserDO followUser = getUserById(followUserId);
-        System.out.println(user.getFollowing()+" "+followUser.getFollowers());
+        List<String> following = user.getFollowing();
+        List<String> followers = followUser.getFollowers();
+        System.out.println(user.getFollowing() + " " + followUser.getFollowers());
         if (user.getFollowing().contains(followUserId)) {
-            user.getFollowing().remove(followUserId);
-            followUser.getFollowers().remove(userId);
-            System.out.println(user.getFollowing()+" "+followUser.getFollowers());
+            following.remove(followUserId);
+            followers.remove(userId);
+            user.setFollowing(following);
+            followUser.setFollowers(followers);
+            System.out.println(user.getFollowing() + " " + followUser.getFollowers());
             userRepository.save(user);
             userRepository.save(followUser);
         }
     }
 
     @Override
-    public List<UserDTO> getFollowingUsers(String userId) {
+    public List<UserDO> getFollowingUsers(String userId) {
         UserDO user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        return user.getFollowing().stream()
-                .map(followingId -> convertToDTO(userRepository.findById(followingId).orElse(null)))
-                .collect(Collectors.toList());
+        List<String> followingIds = user.getFollowing();
+        List<UserDO> FollowingUser = new ArrayList<>();
+        for (String followingId : followingIds) {
+            UserDO followingUser = userRepository.findById(followingId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Post with ID: " + followingId + " not found"));
+            if (followingUser != null) {
+                FollowingUser.add(followingUser);
+            }
+        }
+        return FollowingUser;
     }
 
     @Override
-    public List<UserDTO> getFollowers(String userId) {
+    public List<UserDO> getFollowers(String userId) {
         UserDO user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        return user.getFollowers().stream()
-                .map(followerId -> convertToDTO(userRepository.findById(followerId).orElse(null)))
-                .collect(Collectors.toList());
+        List<String> followerIds = user.getFollowers();
+        List<UserDO> FollowersUser = new ArrayList<>();
+        for (String followerId : followerIds) {
+            UserDO followerUser = userRepository.findById(followerId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Post with ID: " + followerId + " not found"));
+            if (followerUser != null) {
+                FollowersUser.add(followerUser);
+            }
+        }
+        return FollowersUser;
+
+
     }
 
+
     @Override
-    public List<UserDTO> getMutualFollows(String userId) {
+    public List<UserDO> getMutualFollows(String userId) {
         UserDO user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + " not found"));
 
         // 获取该用户的所有关注者（followers）和他们关注的用户（following）
         List<String> followingIds = user.getFollowing();
-        List<UserDTO> mutualFollows = new ArrayList<>();
+        List<UserDO> mutualFollowsUsers = new ArrayList<>();
 
         for (String followId : followingIds) {
             UserDO followUser = userRepository.findById(followId)
@@ -126,11 +157,39 @@ public class UserServiceImpl implements UserService {
 
             // 检查是否互相关注
             if (followUser.getFollowers().contains(userId)) {
-                mutualFollows.add(convertToDTO(followUser));
+                mutualFollowsUsers.add(followUser);
             }
         }
+        return mutualFollowsUsers;
+    }
 
-        return mutualFollows;
+    @Override
+    public void likePost(String userId, String postId) {
+        UserDO user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + " not found"));
+        List<String> likedPosts = user.getLikedPosts();
+        likedPosts.add(postId);
+
+        user.setLikedPosts(likedPosts);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<PostDO> getLikedPosts(String userId) {
+        UserDO user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + " not found"));
+        List<String> likedPostIds = user.getLikedPosts();
+        List<PostDO> likedPosts = new ArrayList<>();
+        System.out.println(likedPostIds);
+        for (String postId : likedPostIds) {
+            PostDO post = postRepository.findById(postId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Post with ID: " + postId + " not found")); // Assuming there's a method to get a post by ID from the repository
+            if (post != null) {
+                likedPosts.add(post);
+            }
+        }
+        return likedPosts;
     }
 
     @Override
@@ -140,17 +199,27 @@ public class UserServiceImpl implements UserService {
         return user.getFollowing().contains(followUserId);
     }
 
-
-    private UserDTO convertToDTO(UserDO user) {
-        // Conversion logic to turn UserDO into a simpler DTO for frontend usage, including username, avatar URL, etc.
-        if (user == null) {
-            return null;
-        }
-        String id = user.getId();
-        String username = user.getName(); // Assuming getName() returns the user's username in UserDO
-        String avatarUrl = user.getAvatarUrl(); // Assuming this field exists and getter method is getAvatarUrl()
-        boolean isOnline = user.isOnline(); // Assuming there's a boolean field in UserDO indicating online status with a getter isOnline()
-
-        return new UserDTO(id, username, avatarUrl, isOnline);
+    @Override
+    public void unlikePost(String id, String postId) {
+        UserDO user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + id + " not found"));
+        List<String> likedPosts = user.getLikedPosts();
+        likedPosts.remove(postId);
+        user.setLikedPosts(likedPosts);
+        userRepository.save(user);
     }
+
+
+//    private UserDTO convertToDTO(UserDO user) {
+//        // Conversion logic to turn UserDO into a simpler DTO for frontend usage, including username, avatar URL, etc.
+//        if (user == null) {
+//            return null;
+//        }
+//        String id = user.getId();
+//        String username = user.getName(); // Assuming getName() returns the user's username in UserDO
+//        String avatarUrl = user.getAvatarUrl(); // Assuming this field exists and getter method is getAvatarUrl()
+//        boolean isOnline = user.isOnline(); // Assuming there's a boolean field in UserDO indicating online status with a getter isOnline()
+//
+//        return new UserDTO(id, username, avatarUrl, isOnline);
+//    }
 }

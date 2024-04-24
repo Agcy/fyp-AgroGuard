@@ -1,15 +1,19 @@
 <template>
-  <div class="bg-green-300">
-<!--    <video autoplay muted loop id="myVideo">-->
-<!--      <source src="@/assets/face-678.mp4" type="video/mp4">-->
-<!--    </video>-->
-<!--    <input-->
-<!--      v-model="username"-->
-<!--      v-on:keydown="handleKeyDown"-->
-<!--      class="input has-background-dark is-primary has-text-white is-large"-->
-<!--      placeholder="Enter your name..."-->
-<!--    />-->
-    <el-button class="button is-primary is-large ml-2" @click="onJoinClicked">Join!</el-button>
+  <div class="min-h-screen bg-cover bg-center background-url">
+    <div class=" bg-opacity-50 min-h-screen flex items-center justify-center">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-yellow-100 bg-opacity-50 backdrop-filter backdrop-blur-lg p-8 rounded-lg shadow-lg items-center">
+          <p class="text-lg text-gray-700 mb-4">Welcome to AgroGuard Chat Room!</p>
+          <p class="text-sm text-gray-600 mb-6">Click 'Join' to Enter the Chat.</p>
+          <el-button
+            class="text-lg font-bold py-3 px-6 rounded bg-green-900
+            hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-500
+            focus:ring-opacity-50"
+            @click="onJoinClicked">
+            Join!
+          </el-button>
+        </div>
+      </div>    </div>
   </div>
 </template>
 
@@ -58,6 +62,8 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.background-url {
+  @apply bg-[url('@/assets/images/farming-agriculture.jpg')] #{!important};
+}
 </style>

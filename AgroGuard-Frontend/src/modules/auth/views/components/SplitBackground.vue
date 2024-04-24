@@ -8,14 +8,21 @@
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+      <!-- Dynamically binding Tailwind class for color -->
+      <polygon :class="`text-${color}-500 fill-current`" points="2560 0 2560 100 0 100"></polygon>
     </svg>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 export default defineComponent({
   name: 'SplitBackground',
+  props: {
+    color: {
+      type: String,
+      default: 'green' // Default is green, can be changed to any Tailwind color
+    }
+  }
 })
 </script>

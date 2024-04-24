@@ -56,4 +56,9 @@ public class PostServiceImpl implements PostService {
     public List<PostDO> searchPosts(String keyword) {
         return postRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrUserIdContainingIgnoreCase(keyword, keyword, keyword);
     }
+
+    @Override
+    public List<PostDO> getAllPostsByUserId(String userId) {
+        return postRepository.findByUserId(userId);
+    }
 }

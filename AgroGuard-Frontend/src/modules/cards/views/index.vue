@@ -290,7 +290,7 @@ import Profile_Background_Image_Url from '@/assets/images/throne.jpg'
 // Components
 import AnalysisCard from './components/AnalysisCard.vue'
 import ListGroupCard from './components/ListGroupCard.vue'
-import ProfileCard from './components/ProfileCard.vue'
+import ProfileCard from '../../profile/views/components/ProfileCard.vue'
 import ContactCard from './components/ContactCard.vue'
 import TeamMemberCard from './components/TeamMemberCard.vue'
 import ImageFillCard from './components/ImageFillCard.vue'

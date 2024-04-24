@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isAuthenticated">
     <div
-      class="relative w-full bg-gradient-to-r from-indigo-410 to-indigo-450 py-24 lg:py-32 lg:pt-40"
+      class="relative w-full bg-gradient-to-r from-green-400 to-green-500 py-24 lg:py-32 lg:pt-40"
     >
       <div
         class="container xl:max-w-5.75xl lg:max-w-4.5xl md:max-w-2.625xl sm:max-w-0.25xl w-full mx-auto px-3.75"
@@ -11,19 +11,6 @@
             <div class="md:flex-9 md:max-w-9/12 lg:flex-8 lg:max-w-2/3">
               <WelcomeLabel />
             </div>
-<!--            <div class="md:flex-6 md:max-w-1/2 lg:flex-5 lg:max-w-5/12">-->
-<!--              <h3 class="text-white mt-12 mb-0">-->
-<!--                <span class="font-bold">You can log in with 3 user types:</span>-->
-<!--              </h3>-->
-<!--              <ul class="text-light mt-4 mb-0 pl-0 lg:pl-7.5">-->
-<!--                <li v-for="(account, index) in accounts" :key="index" class="flex">-->
-<!--                  <div class="px-2">{{ index }}.</div>-->
-<!--                  <div class="w-full">-->
-<!--                    Username <strong>{{ account }}</strong> Password <strong>secret</strong>-->
-<!--                  </div>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
           </div>
         </div>
       </div>
@@ -54,6 +41,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import useStore from 'store'

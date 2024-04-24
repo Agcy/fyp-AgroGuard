@@ -3,11 +3,13 @@
     class="container xl:max-w-5.75xl lg:max-w-4.5xl md:max-w-2.625xl sm:max-w-0.25xl w-full lg:h-14 h-10 flex flex-nowrap basis-auto justify-between items-center mx-auto lg:px-3.75"
   >
     <div class="mr-9 pt-1.5">
-      <a class="inline-block py-2.5 whitespace-nowrap w-[101.45px]" href="#">
-<!--        <img class="h-7.5" alt="..." src="@/assets/images/white.png" />-->
-        <p class="text-white font-semibold">AgroGuard</p>
+      <a class="inline-block py-2.5 whitespace-normal w-auto" href="#">
+        <div class="bg-green-500 p-4">
+          <p class="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-wide uppercase shadow-lg">AgroGuard</p>
+        </div>
       </a>
     </div>
+
     <div class="relative inline-block lg:hidden w-11">
       <div class="flex items-center">
         <el-dropdown placement="bottom-end" trigger="click" popper-class="auth-menu-popper">
@@ -17,7 +19,9 @@
               <el-dropdown-item>
                 <a class="inline-block whitespace-nowrap w-[121.75px] pb-2.5" href="#">
 <!--                  <img class="h-9" alt="..." src="@/assets/images/blue.png" />-->
-                  AgroGuard
+                  <div class="bg-green-500 p-4">
+                    <p class="text-green-950 text-2xl md:text-4xl font-semibold tracking-wide uppercase shadow-lg">AgroGuard</p>
+                  </div>
                 </a>
                 <div class="absolute right-0 top-1.5">
                   <XIcon class="w-6 h-6 text-default hover:text-default active:text-default" />

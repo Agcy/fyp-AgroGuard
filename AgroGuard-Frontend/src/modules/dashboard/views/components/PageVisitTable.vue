@@ -10,7 +10,7 @@
         <el-table :data="paginatedData" style="width: 100%">
           <el-table-column label="Source" prop="source" min-width="200">
             <template #default="scope">
-              {{ scope.row.source.name }}
+              {{ scope.row.source }}
             </template>
           </el-table-column>
           <el-table-column label="Title" prop="title" min-width="300">

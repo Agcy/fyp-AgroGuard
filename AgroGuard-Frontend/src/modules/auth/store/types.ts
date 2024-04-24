@@ -4,7 +4,11 @@ export interface AuthState {
     id: string;
     username: string;
     email: string;
+    occupation: string;
     avatarUrl: string;
+    likedPosts: string[];
+    following: string[];
+    followers: string[];
     roles: string[];
     onlineStatus: boolean;
   };

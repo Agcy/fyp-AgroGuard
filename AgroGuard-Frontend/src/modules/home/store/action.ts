@@ -1,6 +1,7 @@
 // likesStore.ts
 import { defineStore } from 'pinia';
-import { apiAddToFavorite } from 'myApi/user-api/addToLike'; // 确保路径正确
+import { apiAddToFavorite } from 'myApi/user-api/addToLike';
+import { useState } from 'modules/auth/store/state'
 
 export const useLikesStore = defineStore('likes', {
   state: () => ({

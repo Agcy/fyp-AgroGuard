@@ -94,14 +94,20 @@ export default defineComponent({
         if (response.status == 200) {
           console.log(response.data.msg)
           const data = response.data; // 服务器返回的数据
+          console.log("datadatea",data)
 
           // 构建用户信息对象，确保它匹配你的用户信息结构
           const user = {
             id: data.id,
             username: data.username,
             email: data.email,
+            occupation: data.occupation,
+            following: data.following,
+            followers: data.followers,
+            likedPosts: data.likedPosts,
             avatarUrl: data.avatarUrl,
             roles: data.roles,
+            onlineStatus: data.onlineStatus,
           };
           const token = data.token; // 从响应中获取 token
           console.log(user, token)

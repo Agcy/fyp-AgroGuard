@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class DetectionServiceImpl implements DetectionService {
@@ -74,7 +75,7 @@ public class DetectionServiceImpl implements DetectionService {
     }
 
     @Override
-    public DetectionResultDO getDetectionResult(String userId) {
+    public List<DetectionResultDO> getDetectionResult(String userId) {
         return repository.findByUserId(userId);
     }
 }

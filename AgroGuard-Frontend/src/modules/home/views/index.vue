@@ -30,7 +30,9 @@ export default defineComponent({
     onMounted(async () => {
       try {
         const response = await apiGetAllPost();
-        posts.value = response.data; // 假设响应的数据直接是帖子数组
+        const data = response.data;
+        data.reverse();
+        posts.value = data; // 假设响应的数据直接是帖子数组
       } catch (error) {
         console.error("Failed to fetch posts:", error);
         // 这里可以添加错误处理逻辑

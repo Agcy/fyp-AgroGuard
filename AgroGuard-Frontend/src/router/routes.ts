@@ -12,7 +12,8 @@ import {
 } from '@heroicons/vue/outline'
 
 import {
-  CreditCardIcon,
+  BookOpenIcon, CameraIcon,
+  CreditCardIcon, PhoneIcon,
 } from '@heroicons/vue/solid'
 
 const Login = () => import('modules/auth/views/login.vue')
@@ -39,6 +40,12 @@ const Library = () => import('modules/library/views/index.vue')
 const DiseaseDetailPage = () => import('modules/library/views/DiseaseDetailPage.vue')
 const HomeView = () => import('modules/chat/views/HomeView.vue')
 const Chat = () => import('modules/chat/views/WelcomeView.vue')
+const MyDetection = () => import('modules/profile/views/components/MyDetection.vue')
+const MyPosts = () => import('modules/profile/views/components/MyPosts.vue')
+const Friends = () => import('modules/profile/views/components/index.vue')
+const MyFollowing = () => import('modules/profile/views/components/MyFollowing.vue')
+const MyFavoritePosts = () => import('modules/profile/views/components/MyFavoritePosts.vue')
+
 
 const ComponentLayout = () => import('components/ComponentLayout/index.vue')
 
@@ -56,121 +63,153 @@ const routes = [
       parentPath: 'Home'
     },
   },
-  {
-    path: '/components/:componentItem?',
-    component: ComponentLayout,
-    name: 'Components',
-    meta: {
-      title: 'Components',
-      icon: ColorSwatchIcon,
-      color: 'text-info',
-      requiresAuth: true,
-      parentPath: 'Components'
-    },
-    children: [
-      {
-        path: 'buttons',
-        name: 'Buttons',
-        component: Button,
-        meta: {
-          title: 'Buttons',
-          icon: CursorClickIcon,
-          color: 'text-danger-50',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'tags',
-        name: 'Tags',
-        component: Tags,
-        meta: {
-          title: 'Tags',
-          icon: CursorClickIcon,
-          color: 'text-primary',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'notifications',
-        component: Notification,
-        name: 'Notifications',
-        meta: {
-          title: 'Notifications',
-          icon: BellIcon,
-          color: 'text-success-50',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'tables',
-        component: Table,
-        name: 'Tables',
-        meta: {
-          title: 'Tables',
-          icon: ViewBoardsIcon,
-          color: 'text-indigo-410',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'grid',
-        component: Grid,
-        name: 'Grid',
-        meta: {
-          title: 'Grid',
-          icon: ViewGridIcon,
-          color: 'text-info',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'typography',
-        component: Typography,
-        name: 'Typography',
-        meta: {
-          title: 'Typography',
-          icon: DocumentTextIcon,
-          color: 'text-yellow-310',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'cards',
-        component: Card,
-        name: 'Cards',
-        meta: {
-          title: 'Cards',
-          icon: CreditCardIcon,
-          color: 'text-warning-50',
-          requiresAuth: true,
-        },
-      },
-      {
-        path: 'icons',
-        component: Icons,
-        name: 'Icons',
-        meta: {
-          title: 'Icons',
-          icon: StarIcon,
-          color: 'text-red-410',
-          requiresAuth: true,
-        },
-      },
-    ]
-  },
+  // {
+  //   path: '/components/:componentItem?',
+  //   component: ComponentLayout,
+  //   name: 'Components',
+  //   meta: {
+  //     title: 'Components',
+  //     icon: ColorSwatchIcon,
+  //     color: 'text-info',
+  //     requiresAuth: true,
+  //     parentPath: 'Components'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'buttons',
+  //       name: 'Buttons',
+  //       component: Button,
+  //       meta: {
+  //         title: 'Buttons',
+  //         icon: CursorClickIcon,
+  //         color: 'text-danger-50',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'tags',
+  //       name: 'Tags',
+  //       component: Tags,
+  //       meta: {
+  //         title: 'Tags',
+  //         icon: CursorClickIcon,
+  //         color: 'text-primary',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'notifications',
+  //       component: Notification,
+  //       name: 'Notifications',
+  //       meta: {
+  //         title: 'Notifications',
+  //         icon: BellIcon,
+  //         color: 'text-success-50',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'tables',
+  //       component: Table,
+  //       name: 'Tables',
+  //       meta: {
+  //         title: 'Tables',
+  //         icon: ViewBoardsIcon,
+  //         color: 'text-indigo-410',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'grid',
+  //       component: Grid,
+  //       name: 'Grid',
+  //       meta: {
+  //         title: 'Grid',
+  //         icon: ViewGridIcon,
+  //         color: 'text-info',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'typography',
+  //       component: Typography,
+  //       name: 'Typography',
+  //       meta: {
+  //         title: 'Typography',
+  //         icon: DocumentTextIcon,
+  //         color: 'text-yellow-310',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'cards',
+  //       component: Card,
+  //       name: 'Cards',
+  //       meta: {
+  //         title: 'Cards',
+  //         icon: CreditCardIcon,
+  //         color: 'text-warning-50',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //     {
+  //       path: 'icons',
+  //       component: Icons,
+  //       name: 'Icons',
+  //       meta: {
+  //         title: 'Icons',
+  //         icon: StarIcon,
+  //         color: 'text-red-410',
+  //         requiresAuth: true,
+  //       },
+  //     },
+  //   ]
+  // },
+
 
   {
-    path: '/profile',
-    component: Profile,
-    name: 'Profile',
+    path: '/my-posts',
+    component: MyPosts,
+    name: 'MyPosts',
     meta: {
-      title: 'Profile',
-      icon: UserIcon,
-      color: 'text-success-50',
-      isDarkBackground: true,
-      isFullWidthLayout: true,
+      title: 'MyPosts',
       requiresAuth: true,
-      parentPath: 'Home'
+    },
+  },
+  {
+    path: '/my-favorite-posts',
+    component: MyFavoritePosts,
+    name: 'MyFavoritePosts',
+    meta: {
+      title: 'MyFavoritePosts',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/my-detection',
+    component: MyDetection,
+    name: 'MyDetection',
+    meta: {
+      title: 'MyDetection',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/my-friends',
+    component: Friends,
+    name: 'Friends',
+    meta: {
+      title: 'Friends',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/my-follow-user',
+    component: MyFollowing,
+    name: 'MyFollowing',
+    meta: {
+      title: 'MyFollowing',
+      requiresAuth: true,
     },
   },
   {
@@ -235,7 +274,7 @@ const routes = [
       icon: DocumentTextIcon,
       requiresAuth: true,
       parentPath: 'Home',
-      color: 'text-red-410',
+      color: 'text-blue-400',
     },
   },
   {
@@ -255,8 +294,8 @@ const routes = [
       title: 'Chat',
       parentPath: 'Home',
       requiresAuth: true,
-      icon: DocumentTextIcon,
-      color: 'text-red-410',
+      icon: PhoneIcon,
+      color: 'text-green-400',
     }
   },
   {
@@ -267,8 +306,8 @@ const routes = [
       title: 'Detection',
       parentPath: 'Home',
       requiresAuth: true,
-      icon: DocumentTextIcon,
-      color: 'text-red-410',
+      icon: CameraIcon,
+      color: 'text-yellow-400',
     }
   },
   {
@@ -279,8 +318,8 @@ const routes = [
       title: 'Library',
       parentPath: 'Home',
       requiresAuth: true,
-      icon: DocumentTextIcon,
-      color: 'text-red-410',
+      icon: BookOpenIcon,
+      color: 'text-blue-400',
     }
   },
   {
@@ -304,7 +343,21 @@ const routes = [
       // icon: DocumentTextIcon,
       // color: 'text-red-410',
     }
-  }
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    name: 'Profile',
+    meta: {
+      title: 'Profile',
+      icon: UserIcon,
+      color: 'text-success-50',
+      isDarkBackground: true,
+      isFullWidthLayout: true,
+      requiresAuth: true,
+      parentPath: 'Home'
+    },
+  },
 
 ]
 

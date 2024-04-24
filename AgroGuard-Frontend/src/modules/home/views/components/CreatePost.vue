@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible = true" class="bg-green-500">Create Your Post</el-button>
-    <el-dialog v-model="dialogVisible" title="添加新帖子">
+    <el-dialog v-model="dialogVisible" title="Add New Post">
       <div>
         <el-upload
           ref="upload"
@@ -18,11 +18,11 @@
           <img width="100%" :src="previewImage" alt="">
         </el-dialog>
       </div>
-      <el-input placeholder="请输入标题" v-model="newPostData.title" class="mb-2"></el-input>
-      <el-input type="textarea" placeholder="请输入内容" v-model="newPostData.content"></el-input>
+      <el-input placeholder="Please enter a title" v-model="newPostData.title" class="mb-2"></el-input>
+      <el-input type="textarea" placeholder="Please enter content" v-model="newPostData.content"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitPost">确 定</el-button>
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="submitPost">Confirm</el-button>
       </span>
     </el-dialog>
   </div>

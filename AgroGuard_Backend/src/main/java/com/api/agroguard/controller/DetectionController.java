@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/detection")
@@ -51,14 +52,11 @@ public class DetectionController {
         }
     }
 
+    // 获取检测历史记录
     @GetMapping("/{userId}")
-    public ResponseEntity<DetectionResultDO> getDetectionResult(@PathVariable String userId) {
-        DetectionResultDO result = detectionService.getDetectionResult(userId);
-        if (result == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(result);
-        }
+    public ResponseEntity<List<DetectionResultDO>> getDetectionResult(@PathVariable String userId) {
+        List<DetectionResultDO> result = detectionService.getDetectionResult(userId);
+        return ResponseEntity.ok(result);
     }
 
 

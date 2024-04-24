@@ -2,12 +2,16 @@ package com.api.agroguard.controller;
 
 import com.api.agroguard.dto.UserDTO;
 import com.api.agroguard.exception.ResourceNotFoundException;
+import com.api.agroguard.model.PostDO;
 import com.api.agroguard.model.UserDO;
 import com.api.agroguard.repository.UserRepository;
 import com.api.agroguard.service.UserService;
+import com.api.agroguard.service.impl.UserDetailsImpl;
+import com.api.agroguard.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -103,18 +107,18 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/following")
-    public ResponseEntity<List<UserDTO>> getFollowingUsers(@PathVariable String userId) {
+    public ResponseEntity<List<UserDO>> getFollowingUsers(@PathVariable String userId) {
         return ResponseEntity.ok(userService.getFollowingUsers(userId));
     }
 
     @GetMapping("/{userId}/followers")
-    public ResponseEntity<List<UserDTO>> getFollowers(@PathVariable String userId) {
+    public ResponseEntity<List<UserDO>> getFollowers(@PathVariable String userId) {
         return ResponseEntity.ok(userService.getFollowers(userId));
     }
 
     @GetMapping("/{userId}/mutual-follows")
-    public ResponseEntity<List<UserDTO>> getMutualFollows(@PathVariable String userId) {
-        List<UserDTO> mutualFollows = userService.getMutualFollows(userId);
+    public ResponseEntity<List<UserDO>> getMutualFollows(@PathVariable String userId) {
+        List<UserDO> mutualFollows = userService.getMutualFollows(userId);
         return ResponseEntity.ok(mutualFollows);
     }
 
@@ -123,5 +127,22 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("follows", userService.checkFollowsStatus(userId, targetUserId));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/like/{postId}")
+    public ResponseEntity<?> likePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String postId) {
+        userService.likePost(userDetails.getId(), postId);
+        return ResponseEntity.ok("Post liked successfully");
+    }
+
+    @GetMapping("/unlike/{postId}")
+    public ResponseEntity<?> unlikePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String postId) {
+        userService.unlikePost(userDetails.getId(), postId);
+        return ResponseEntity.ok("Post unliked successfully");
+    }
+
+    @GetMapping("/liked-posts")
+    public ResponseEntity<List<PostDO>> getLikedPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok(userService.getLikedPosts(userDetails.getId()));
     }
 }

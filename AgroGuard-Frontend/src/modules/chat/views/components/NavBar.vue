@@ -18,7 +18,7 @@
         <p class="text-green-700 mx-4 my-2">
           Hi <span class="text-green-900 font-bold">{{ user.username }}</span>!
         </p>
-        <el-button type="danger" size="small" href="/public">Log out</el-button>
+<!--        <el-button type="danger" size="small" href="/public">Log out</el-button>-->
       </div>
     </div>
   </nav>

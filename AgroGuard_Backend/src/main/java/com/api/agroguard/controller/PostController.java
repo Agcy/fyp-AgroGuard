@@ -81,4 +81,10 @@ public class PostController {
     public PostDO getSinglePost(@PathVariable String postId) {
         return postService.getPostById(postId);
     }
+
+    // 获取用户的所有帖子
+    @GetMapping("/{userId}/getAll")
+    public List<PostDO> getAllPostByUser(@PathVariable String userId) {
+        return postService.getAllPostsByUserId(userId);
+    }
 }

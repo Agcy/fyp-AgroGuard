@@ -23,18 +23,18 @@
       <div class="grid grid-cols-1 lg:grid-cols-6 gap-7">
         <div class="col-span-3">
           <!-- Left indicator -->
-          <PrimaryIndicator />
+<!--          <PrimaryIndicator />-->
         </div>
         <div class="col-span-3">
           <!-- Right indicator -->
-          <WarningIndicator />
+<!--          <WarningIndicator />-->
         </div>
       </div>
       <!-- End Indicator -->
 
       <!-- Edit profile section -->
       <div class="mt-7">
-        <EditProfileForm />
+        <UserProfile />
       </div>
     </div>
     <!-- End edit profile -->
@@ -45,23 +45,20 @@
         <!-- Admin card -->
         <div class="col-span-6">
           <ProfileCard
-            :avatarImg="user?.avatarUrl"
+            :avatarImg="avatarUrl"
             :backgroundImg="avatarBackgroundUrl"
-            name="Admin"
-            :age="67"
-            location="The Castle of Trujillo, Spain"
-            :friends="22"
-            :photos="10"
-            :comments="89"
-            job="Solution Manager - Creative Tim Officer"
-            degree="University of Computer Science"
+            occupation="Ireland"
+            :following="following.length"
+            :posts="3"
+            :followers="followers.length"
+            :job="occupation"
           />
         </div>
         <!-- End admin -->
 
         <!-- Progress track -->
         <div class="col-span-6">
-          <ProgressTrack />
+          <FollowersList />
         </div>
         <!-- End progress track -->
       </div>
@@ -73,11 +70,11 @@
 import { defineComponent } from 'vue'
 
 // Components
-import PrimaryIndicator from './components/PrimaryIndicator.vue'
-import WarningIndicator from './components/WarningIndicator.vue'
-import EditProfileForm from './components/EditProfileForm.vue'
-import ProgressTrack from './components/ProgressTrack.vue'
-import ProfileCard from '../../cards/views/components/ProfileCard.vue'
+// import PrimaryIndicator from './components/MyPosts.vue'
+// import WarningIndicator from './components/MyFavoritePosts.vue'
+import UserProfile from './components/UserProfile.vue'
+import FollowersList from './components/MyFollowers.vue'
+import ProfileCard from './components/ProfileCard.vue'
 
 import {useState} from 'modules/auth/store/state'
 import backGround from '@/assets/images/profile-cover.jpg'
@@ -87,15 +84,22 @@ import avatarBackgroundUrl from '@/assets/images/window-purple-image.jpg'
 export default defineComponent({
   name: 'Profile',
   components: {
-    PrimaryIndicator,
-    WarningIndicator,
-    EditProfileForm,
-    ProgressTrack,
+    UserProfile,
+    FollowersList,
     ProfileCard,
   },
   setup(_) {
     const user = useState().user
+    const avatarUrl: string = user?.avatarUrl as string | ''
+    const following: string[] = user?.following as string[] | []
+    const followers: string[] = user?.followers as string[] | []
+    const occupation: string = user?.occupation as string | ''
+    console.log('user', user)
     return {
+      avatarUrl,
+      following,
+      followers,
+      occupation,
       backGround,
       user,
       avatarBackgroundUrl,
@@ -106,7 +110,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .background-url {
-  @apply bg-[url('@/assets/images/profile-cover.jpg')] #{!important};
+  @apply bg-[url('@/assets/images/farming-agriculture.jpg')] #{!important};
 }
 ::v-deep(.card-avatar-profile.el-link) .el-link--inner {
   @apply absolute;

@@ -20,7 +20,7 @@
             class="like-button w-6 h-6">
             <component
               :is="HeartIcon"
-              :class="['icon', isLiked ? 'text-red-500' : 'text-gray-400', scaleClass]"
+              :class="['icon', isLiked ? 'bg-red-410 text-red-700' : 'bg-gray-400', scaleClass]"
             />
           </el-icon>
           <!--          <HeartIcon />-->
@@ -32,10 +32,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, computed, ref} from 'vue';
+import {defineComponent, PropType, computed, ref, reactive} from 'vue';
 import {Post} from '../../store/type'; // 假设这是你的Post接口路径
 import {useLikesStore} from "../../store/action";
 import {HeartIcon} from '@heroicons/vue/solid'
+import {apiLikePost} from "myApi/user-api/likePost";
+import { useState } from 'modules/auth/store/state'
+import {ElMessage} from "element-plus";
+import {apiUnLikePost} from "myApi/user-api/unLikePosts";
 
 export default defineComponent({
   name: 'PostCard',
@@ -52,16 +56,40 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const likesStore = useLikesStore();
+    const user = useState().user;
+    // const likesStore = useLikesStore();
+    // const likedPosts: string[] = user?.likedPosts as string[] || [];
+    const likedPosts = reactive<string[]>(user?.likedPosts || []);
 
 // 计算属性，检查当前帖子是否被喜欢
-    const isLiked = computed(() => likesStore.likedPosts.has(props.post.id));
-
+    let isLiked = computed(() => likedPosts.includes(props.post.id as string));
+    // console.log('islike',isLiked.value)
     const scaleClass = ref('');
 
 // 处理点击事件并触发动画效果
     function handleLikeClick() {
-      likesStore.toggleLike(props.post.id);
+      if (!isLiked.value) {
+        apiLikePost(props.post.id).then((res) => {
+          if (res.status == 200){
+            // isLiked.value = true;
+            likedPosts.push(props.post.id);
+            user.likedPosts = likedPosts;
+          } else{
+            ElMessage.error('Failed to like post');
+          }
+        });
+      } else {
+        apiUnLikePost(props.post.id).then((res) => {
+          if (res.status == 200){
+            // isLiked.value = false;
+            likedPosts.splice(likedPosts.indexOf(props.post.id), 1);
+            user?.likedPosts.splice(user?.likedPosts.indexOf(props.post.id), 1);
+          } else{
+            ElMessage.error('Failed to unlike post');
+          }
+        });
+      }
+
       scaleClass.value = 'scale-up';
       setTimeout(() => {
         scaleClass.value = '';

@@ -25,10 +25,16 @@ public class UserDetailsImpl implements UserDetails {
     private String password;
 
     private String avatarUrl;
+    private List<String> following;
+    private List<String> followers;
+    private List<String> likedPosts;
+    private String occupation;
 
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(String id, String username, String email, String password, String avatarUrl,
+                           String occupation, List<String> following, List<String> followers,
+                           List<String> likedPosts,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
@@ -36,6 +42,10 @@ public class UserDetailsImpl implements UserDetails {
         this.password = password;
         this.avatarUrl = avatarUrl;
         this.authorities = authorities;
+        this.occupation = occupation;
+        this.following = following;
+        this.followers = followers;
+        this.likedPosts = likedPosts;
     }
 
     public static UserDetailsImpl build(UserDO user) {
@@ -49,6 +59,10 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getAvatarUrl(),
+                user.getOccupation(),
+                user.getFollowing(),
+                user.getFollowers(),
+                user.getLikedPosts(),
                 authorities);
     }
 
@@ -70,11 +84,29 @@ public class UserDetailsImpl implements UserDetails {
         return password;
     }
 
-    public String getAvatarUrl() { return avatarUrl;}
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
 
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
+    }
+
+    public List<String> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public String getOccupation() {
+        return occupation;
     }
 
     @Override

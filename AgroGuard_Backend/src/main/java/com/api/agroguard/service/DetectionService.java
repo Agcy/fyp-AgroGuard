@@ -5,8 +5,9 @@ import com.api.agroguard.model.DetectionResultDO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public interface DetectionService {
     DetectionResponse detectAndSave(File imageFile, String userId) throws IOException;
-    DetectionResultDO getDetectionResult(String userId);
+    List<DetectionResultDO> getDetectionResult(String userId);
 }
